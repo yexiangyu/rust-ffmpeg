@@ -111,6 +111,20 @@ impl Input {
         }
     }
 
+    pub fn seek_bytes<R: Range<i64>>(
+        &mut self,
+        prefer: i64,
+        min: i64,
+        max: i64,
+    ) -> Result<(), Error> {
+        unsafe {
+            match avformat_seek_file(self.as_mut_ptr(), -1, min, prefer, max, 2) {
+                s if s >= 0 => Ok(()),
+                e => Err(Error::from(e)),
+            }
+        }
+    }
+
     pub fn seek<R: Range<i64>>(&mut self, ts: i64, range: R) -> Result<(), Error> {
         unsafe {
             match avformat_seek_file(
