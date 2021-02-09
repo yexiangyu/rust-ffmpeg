@@ -111,7 +111,7 @@ impl Input {
         }
     }
 
-    pub fn seek_bytes<R: Range<i64>>(
+    pub fn seek_bytes(
         &mut self,
         prefer: i64,
         min: i64,
